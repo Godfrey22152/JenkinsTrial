@@ -1,20 +1,35 @@
+def gv
+
 pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage("init") {
             steps {
-                echo 'Building the Application'
+                script {
+                    gv = load "script.groovy" // This loads the script, but may not be suitable for loading an object
+                }
             }
         }
-        stage('Test') {
+        stage("Build") {
             steps {
-                echo 'Testing the Application'
+                script {
+                    gv.buildApp() // Assuming gv is an object with a method buildApp()
+                }
             }
         }
-        stage('Deploy') {
+        stage("Test") {
             steps {
-                echo 'Deployimg the Application'
+                script {
+                    gv.testApp() // Assuming gv is an object with a method testApp()
+                }
+            }
+        }
+        stage("Deploy") {
+            steps {
+                script {
+                    gv.deployApp() // Assuming gv is an object with a method deployApp()
+                }
             }
         }
     }
